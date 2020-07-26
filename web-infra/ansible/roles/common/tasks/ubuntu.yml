@@ -1,0 +1,17 @@
+- name: Update APT Cache
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Install basic packages
+  apt:
+    name: ['language-pack-en', 'git', 'fail2ban', 'python-dev', 'python-virtualenv', 'python3-pip']
+    state: latest
+    update_cache: yes
+
+- name: Enable SSH in Firewall
+  ufw: rule=allow port=22
+
+- name: Enable HTTP Connections
+  ufw: rule=allow port=80
+
+- name: Enable Firewall
+  ufw: state=enabled

@@ -1,0 +1,14 @@
+# ansible/playbook.yml
+---
+- name: Prepare server
+  hosts: all
+  become: true
+
+  roles:
+  - { role: sshd, tags: [sshd] }
+  
+- hosts: all
+  become: true
+
+  roles:
+  - common

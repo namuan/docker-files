@@ -1,0 +1,14 @@
+public/
+infrastructure/.terraform/
+web/.firebase/
+.env
+*.retry
+*.log
+certs/
+*.db
+*.pyc
+ingest/data/*
+.python-version
+.idea/
+py-web/.vagrant
+venv/

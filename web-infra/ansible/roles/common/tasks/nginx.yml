@@ -1,0 +1,11 @@
+- name: Ensure nginx is installed
+  apt: name=nginx state=present update_cache=yes
+
+- name: Ensure default symbolic linked site is deleted
+  file: path=/etc/nginx/sites-available/default state=absent
+
+- name: Write nginx configuration
+  template: src=nginx.conf.j2
+            dest=/etc/nginx/sites-available/default
+  notify:
+    - restart nginx

@@ -1,0 +1,4 @@
+requests
+python-dotenv
+peewee
+psycopg2-binary

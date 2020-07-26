@@ -1,0 +1,15 @@
+---
+#- name: users
+#  src: weareinteractive.users
+#
+#- name: sshd
+#  src: willshersystems.sshd
+#
+#- name: swapfile
+#  src: oefenweb.swapfile
+#
+- name: ufw
+  src: weareinteractive.ufw
+
+#- name: ntp
+#  src: geerlingguy.ntp

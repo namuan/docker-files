@@ -1,0 +1,10 @@
+{% if page_count > 1 %}
+<ul class="pagination justify-content-center mb-4">
+    <li class="page-item {% if page + 1 > page_count %} disabled {%endif%}">
+        <a class="page-link" href="/?ft={{ft}}&qt={{qt}}&qp={{qp}}&page={{ page + 1 }}">&larr; Older</a>
+    </li>
+    <li class="page-item {% if page - 1 < 1 %} disabled {%endif%}">
+        <a class="page-link" href="/?ft={{ft}}&qt={{qt}}&qp={{qp}}&page={{ page - 1 }}">Newer &rarr;</a>
+    </li>
+</ul>
+{% endif %}

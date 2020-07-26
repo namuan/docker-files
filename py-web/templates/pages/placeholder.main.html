@@ -1,0 +1,38 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<div class="row">
+
+    <div class="col-md-12">
+
+        {% if qt == "search" %}
+        <h3 class="my-4">Search results for {{qp}}</h3>
+        {% endif %}
+
+        {% for entry in file_with_tags %}
+        <div class="card mb-8">
+            <div data-sha="{{entry.file_sha}}" class="card-body">
+                <div class="card-header">
+                    <a target="_blank" href="{{entry.repo_html_link}}">{{entry.repo_name}}</a>
+                    - <a target="_blank"
+                         href="{{entry.html_link}}">{{entry.file_path}}</a>
+                    <p class="card-text">{% if entry.repo_desc != None %}{{entry.repo_desc}}{%endif%}</p>
+                </div>
+                <div>
+                    <button id="btn-clipboard" class="btn btn-outline-light" data-clipboard-target="#code_{{loop.index}}">Clipboard</button>
+                    <pre id="code_{{loop.index}}" class="prettyprint lang-bsh">{{entry.decoded_file | highlight_search | safe}}</pre>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>No files found</p>
+        {% endfor %}
+
+        <!-- Pagination -->
+        {% include "includes/pagination.html" %}
+
+    </div>
+
+</div>
+{% endblock %}
