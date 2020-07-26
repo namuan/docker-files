@@ -1,0 +1,2 @@
+- name: Ensure Supervisor is installed
+  apt: name=supervisor state=present update_cache=yes

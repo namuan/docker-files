@@ -61,7 +61,13 @@ make setupplaybook
 To re-deploy changes and restart supervisor daemon after deployment
 
 ```bash
-make deployapp restart
+make deployapp updateapp
+```
+
+*Rollback application*
+
+```bash
+make updateapp
 ```
 
 *Cleanup*

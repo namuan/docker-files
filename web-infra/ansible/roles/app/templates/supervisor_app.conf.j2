@@ -1,7 +1,7 @@
 [program:{{ app_name }}]
 environment={% for k, v in wsgi_env_vars.items() %}{% if not loop.first %},{% endif %}{{ k }}="{{ v }}"{% endfor %}
 
-command={{ venv_dir }}/bin/gunicorn --bind=127.0.0.1 --workers 4 app:app
+command=gunicorn --bind=127.0.0.1 --workers 4 app:app
 directory={{ app_dir }}
 user={{ deploy_user }}
 autostart=true

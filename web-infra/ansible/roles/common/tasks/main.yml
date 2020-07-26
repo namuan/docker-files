@@ -1,5 +1,4 @@
 ---
 - include: ubuntu.yml
 - include: nginx.yml
-- include: dependencies.yml
-- include: wsgi.yml
+- include: supervisor.yml

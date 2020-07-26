@@ -1,13 +1,12 @@
 ---
 app_name: "{{ lookup('env','PROJECTNAME') }}"
+remote_dir: "{{ lookup('env','REMOTEDIR') }}"
 wsgi_server_port: 8000
 fqdn: docker-files.com
 
 deploy_user: imon
-app_dir: /home/{{deploy_user}}/{{app_name}}
+app_dir: /home/{{deploy_user}}/{{remote_dir}}
 
-venv_dir: "{{app_dir}}/venv"
-venv_python: "{{venv_dir}}/bin/python"
 wsgi_env_vars:
   SECRET_KEY: "{{ lookup('env','FLASK_SECRET_KEY') }}"
 

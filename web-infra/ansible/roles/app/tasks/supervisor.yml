@@ -1,6 +1,3 @@
-- name: Ensure Supervisor is installed
-  apt: name=supervisor state=present update_cache=yes
-
 - name: Create Supervisor template
   template:
     src: supervisor_app.conf.j2
@@ -8,9 +5,6 @@
 
 - name: Stop Supervisor for App
   service: name=supervisor state=stopped
-
-- name: Pause for Restart to take effect
-  pause: seconds=2
 
 - name: Start Supervisor for App
   service: name=supervisor state=started

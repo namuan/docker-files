@@ -1,4 +1,5 @@
 export PROJECTNAME=py-flask-digitalocean
+export REMOTEDIR=${PROJECTNAME}-v2
 
 .SILENT: ;               # no need for @
 
@@ -23,7 +24,7 @@ clean: ## Cleans all cached files
 	find . -type d -name '__pycache__' | xargs rm -rf
 
 deployapp: clean ## Deploy application
-	ssh ${PROJECTNAME} -C "mkdir -vp ./${PROJECTNAME}"
+	ssh ${PROJECTNAME} -C "mkdir -vp ./${REMOTEDIR}"
 	rsync -avzr \
     		./py-web/docker_files.py \
     		./py-web/app.py \
@@ -31,7 +32,10 @@ deployapp: clean ## Deploy application
     		./py-web/db \
     		./py-web/static \
     		./py-web/templates \
-    		${PROJECTNAME}:./${PROJECTNAME}/
+    		${PROJECTNAME}:./${REMOTEDIR}/
+
+updateapp: ## Re-generate supervisord by looking at REMOTEDIR variable and restart nginx/supervisord
+	./venv/bin/ansible-playbook web-infra/ansible/app_playbook.yml -i web-infra/ansible/hosts -l doremote
 
 ssh: ## ssh into project server
 	ssh ${PROJECTNAME}
@@ -40,7 +44,7 @@ restart: ## Restarts supervisor
 	ssh ${PROJECTNAME} -C "sudo service supervisor restart"
 
 setupplaybook: ## Setup Infrastructure on DigitalOcean
-	./venv/bin/ansible-playbook web-infra/ansible/setup_playbook.yml -i web-infra/ansible/hosts -l do-remote
+	./venv/bin/ansible-playbook web-infra/ansible/setup_playbook.yml -i web-infra/ansible/hosts -l doremote
 
 deleteinfra: ## Deletes DigitalOcean Droplet
 	doctl compute droplet delete ${PROJECTNAME}
