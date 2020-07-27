@@ -4,7 +4,7 @@ remote_dir: "{{ lookup('env','REMOTEDIR') }}"
 wsgi_server_port: 8000
 fqdn: docker-files.com
 
-deploy_user: imon
+deploy_user: manu
 app_dir: /home/{{deploy_user}}/{{remote_dir}}
 
 wsgi_env_vars:
@@ -15,9 +15,10 @@ ssh_pub_fingerprint: "{{ lookup('env','DIGITAL_OCEAN_SSH_FINGERPRINT') }}"
 digital_ocean_api_token: "{{ lookup('env','DIGITAL_OCEAN_TOKEN') }}"
 
 swapfile_size: 1GB
-swapfile_swappiness: 10
-swapfile_vfs_cache_pressure: 50
+swapfile_swappiness: "10"
+swapfile_vfs_cache_pressure: "50"
 
+ntp_enabled: true
 ntp_timezone: Etc/UTC
 ntp_manage_config: true
 

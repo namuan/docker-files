@@ -1,8 +1,5 @@
-[vb]
-192.168.33.10 ansible_user=vagrant ansible_ssh_private_key_file=./.vagrant/machines/default/virtualbox/private_key ansible_python_interpreter=/usr/bin/python3
-
 [do]
 localhost ansible_connection=local ansible_python_interpreter=python3
 
 [doremote]
-py-flask-digitalocean ansible_user=imon ansible_python_interpreter=/usr/bin/python3
+py-flask-digitalocean ansible_user=manu ansible_python_interpreter=/usr/bin/python3
