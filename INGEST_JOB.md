@@ -2,6 +2,12 @@
 
 Following steps are required to update the database behind docker-files.com
 
+Note: Restore database if it is new remote machine
+
+```bash
+make -f IngestMakefile dbrestore
+```
+
 #### Run pipeline for refreshing database
 
 Deploy latest indexing code

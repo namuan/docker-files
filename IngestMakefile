@@ -24,6 +24,10 @@ deploy: initdirs ## Copies any changed file to the server
 		ingest/scripts \
 		${PROJECTNAME}:./${REMOTEDIR}
 
+dbrestore: ## Restore local database to remote
+	echo "Restoring local db files"; \
+	scp ./py-web/db/*.db ${PROJECTNAME}:"./${REMOTEDIR}/db/";
+
 dbbackup: ## Copies the remote database locally
 	echo "Backup database files"; \
 	scp ${PROJECTNAME}:"./${REMOTEDIR}/db/*.db" ./db/;
