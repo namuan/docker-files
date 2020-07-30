@@ -1,0 +1,45 @@
+export PROJECTNAME=py-flask-digitalocean
+export REMOTEDIR=${PROJECTNAME}-index
+
+.SILENT: ;               # no need for @
+
+
+clean: ## Cleans all cached files
+	find . -type d -name '__pycache__' | xargs rm -rf
+
+initdirs: clean ## Initialize the directories
+	ssh ${PROJECTNAME} -C "mkdir -vp ./${REMOTEDIR}/db;mkdir -vp ./${REMOTEDIR}/data"
+
+deploy: initdirs ## Copies any changed file to the server
+	rsync -avzr \
+		ingest/.env \
+		ingest/admin.py \
+		ingest/ingest.py \
+		ingest/storage.py \
+		ingest/storage_update_file_content.py \
+		ingest/storage_update_search_index.py \
+		ingest/status_notifier.py \
+		ingest/requirements.txt \
+		ingest/ingest \
+		ingest/scripts \
+		${PROJECTNAME}:./${REMOTEDIR}
+
+dbbackup: ## Copies the remote database locally
+	echo "Backup database files"; \
+	scp ${PROJECTNAME}:"./${REMOTEDIR}/db/*.db" ./db/;
+
+dfpipeline: deploy ## Run all stages to process Dockerfiles
+	ssh ${PROJECTNAME} -C 'bash -l -c "cd ${REMOTEDIR};./scripts/setup_all_docker_file.sh"'
+
+dcpipeline: deploy ## Run all stages to process Dockerfiles
+	ssh ${PROJECTNAME} -C 'bash -l -c "cd ${REMOTEDIR};./scripts/setup_all_docker_compose.sh"'
+
+.PHONY: help
+.DEFAULT_GOAL := help
+
+help: Makefile
+	echo
+	echo " Choose a command run in Docker-files ingest:"
+	echo
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	echo
