@@ -16,16 +16,10 @@ Deploy latest indexing code
 make -f IngestMakefile deploy
 ```
 
-Update Docker files
+Start pipeline to index files
 
 ```
-make -f IngestMakefile dfpipeline
-```
-
-Update Docker compose files
-
-```
-make -f IngestMakefile dcpipeline
+make -f IngestMakefile pipeline
 ```
 
 ### Backup database and copy to Py-Web

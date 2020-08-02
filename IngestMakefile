@@ -12,7 +12,7 @@ initdirs: clean ## Initialize the directories
 
 deploy: initdirs ## Copies any changed file to the server
 	rsync -avzr \
-		ingest/.env \
+	    ingest/.env \
 		ingest/admin.py \
 		ingest/ingest.py \
 		ingest/storage.py \
@@ -32,11 +32,8 @@ dbbackup: ## Copies the remote database locally
 	echo "Backup database files"; \
 	scp ${PROJECTNAME}:"./${REMOTEDIR}/db/*.db" ./db/;
 
-dfpipeline: deploy ## Run all stages to process Dockerfiles
-	ssh ${PROJECTNAME} -C 'bash -l -c "cd ${REMOTEDIR};./scripts/setup_all_docker_file.sh"'
-
-dcpipeline: deploy ## Run all stages to process Dockerfiles
-	ssh ${PROJECTNAME} -C 'bash -l -c "cd ${REMOTEDIR};./scripts/setup_all_docker_compose.sh"'
+pipeline: deploy ## Start pipeline to index files
+	ssh ${PROJECTNAME} -C 'bash -l -c "cd ${REMOTEDIR};./scripts/setup_pipelines.sh"'
 
 .PHONY: help
 .DEFAULT_GOAL := help
