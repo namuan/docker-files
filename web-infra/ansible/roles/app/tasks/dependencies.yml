@@ -1,4 +1,4 @@
-- name: install dependencies into a new virtualenv
+- name: install dependencies
   pip:
     requirements: "{{ app_dir }}/requirements.txt"
 

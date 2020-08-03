@@ -2,10 +2,10 @@
 
 Following steps are required to update the database behind docker-files.com
 
-Note: Restore database if it is new remote machine
+Note: Restore the database if it is new remote machine
 
 ```bash
-make -f IngestMakefile dbrestore
+make updatedb
 ```
 
 #### Run pipeline for refreshing database
@@ -28,8 +28,7 @@ Download the database from remote server
 
 ```
 make -f IngestMakefile dbbackup
-cp db/docker_files_2.db ../py-web/db/docker_files_2.db
-cd ../py-web
+cp ./ingest/db/docker_files_2.db ./py-web/db/docker_files_2.db
 make run
 ```
 
@@ -40,15 +39,15 @@ If data is corrupted then check the Rollback section
 Other run the following command to push the latest database to live
 
 ```
-make updateapp
+make updatedb updateapp
 ```
 
 If everything is good then commit everything to Github
 
-Back to the ingest folder to start again
+Navigate back to the folder to start the process again
 
 ```
-cd ../ingest
+cd ingest
 ```
 
 ### Rollback

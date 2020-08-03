@@ -8,6 +8,7 @@ venv: ## Sets up venv
 
 requirements: ## Sets up required dependencies
 	./venv/bin/pip install -r requirements-dev.txt
+	./venv/bin/pip install -r py-web/requirements.txt
 	./venv/bin/ansible-galaxy --version
 	./venv/bin/ansible-playbook --version
 
@@ -34,6 +35,12 @@ deployapp: clean ## Deploy application
     		./py-web/templates \
     		${PROJECTNAME}:./${REMOTEDIR}/
 
+updatedb: ## Copies the database from local to remote server
+	ssh ${PROJECTNAME} -C "mkdir -vp ./${REMOTEDIR}"
+	rsync -avzr \
+			./py-web/db \
+			${PROJECTNAME}:./${REMOTEDIR}/
+
 updateapp: ## Re-generate supervisord by looking at REMOTEDIR variable and restart nginx/supervisord
 	./venv/bin/ansible-playbook web-infra/ansible/app_playbook.yml -i web-infra/ansible/hosts -l doremote
 
@@ -48,6 +55,9 @@ setupplaybook: ## Setup Infrastructure on DigitalOcean
 
 deleteinfra: ## Deletes DigitalOcean Droplet
 	doctl compute droplet delete ${PROJECTNAME}
+
+run: ## Runs web application locally
+	./venv/bin/python py-web/app.py
 
 .PHONY: help
 .DEFAULT_GOAL := help
