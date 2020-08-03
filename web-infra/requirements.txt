@@ -1,1 +1,3 @@
-Fabric>=1.10.0
+bpython
+dopy
+ansible

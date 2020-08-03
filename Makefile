@@ -7,7 +7,7 @@ venv: ## Sets up venv
 	python3 -m venv venv
 
 requirements: ## Sets up required dependencies
-	./venv/bin/pip install -r requirements-dev.txt
+	./venv/bin/pip install -r web-infra/requirements.txt
 	./venv/bin/pip install -r py-web/requirements.txt
 	./venv/bin/ansible-galaxy --version
 	./venv/bin/ansible-playbook --version
