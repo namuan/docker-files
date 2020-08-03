@@ -1,4 +1,4 @@
-export PROJECTNAME=py-flask-digitalocean
+export PROJECTNAME=$(shell basename "$(PWD)")
 export REMOTEDIR=${PROJECTNAME}-index
 
 .SILENT: ;               # no need for @
